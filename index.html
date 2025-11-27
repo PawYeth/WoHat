@@ -1,0 +1,1588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>EcoSphere — Sustainable Living & Green Technologies</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Chart.js for visualizations -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    /* small custom tweaks */
+    html { scroll-behavior: smooth; }
+    .card { transition: transform .18s ease, box-shadow .18s ease; }
+    .card:hover { transform: translateY(-6px); box-shadow: 0 10px 30px rgba(2,6,23,0.12); }
+    
+    /* Custom styles for assessment */
+    .assessment-step {
+      transition: opacity 0.3s ease;
+    }
+    .fade-out {
+      opacity: 0;
+    }
+    .fade-in {
+      opacity: 1;
+    }
+    .option-card {
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .option-card.selected {
+      border-color: #10b981;
+      background-color: #f0fdf4;
+    }
+    .progress-bar {
+      height: 6px;
+      background-color: #e5e7eb;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background-color: #10b981;
+      transition: width 0.3s ease;
+    }
+    .appliance-option {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      cursor: pointer;
+    }
+    .appliance-option.selected {
+      border-color: #10b981;
+      background-color: #f0fdf4;
+    }
+  </style>
+</head>
+<body class="bg-green-50 text-slate-800">
+
+  <!-- NAV -->
+  <header class="fixed top-0 left-0 right-0 bg-white/90 backdrop-blur z-40 shadow-sm hidden" id="mainHeader">
+    <div class="container mx-auto flex items-center justify-between p-4">
+      <a href="#home" class="text-2xl font-extrabold text-green-700">EcoSphere</a>
+      <nav class="space-x-4 text-sm font-medium hidden md:block">
+        <a href="#why" class="hover:text-green-600">Why</a>
+        <a href="#solutions" class="hover:text-green-600">Solutions</a>
+        <a href="#tech" class="hover:text-green-600">Technologies</a>
+        <a href="#calculator" class="hover:text-green-600">Calculator</a>
+        <a href="#tips" class="hover:text-green-600">Tips & Quiz</a>
+        <a href="#map" class="hover:text-green-600">Map</a>
+        <a href="#pledge" class="hover:text-green-600">Pledge</a>
+        <a href="#future" class="hover:text-green-600">Future</a>
+      </nav>
+
+      <div class="md:hidden">
+        <button id="menuBtn" class="p-2 rounded border">Menu</button>
+      </div>
+    </div>
+
+    <!-- mobile menu -->
+    <div id="mobileMenu" class="hidden bg-white/95 border-t">
+      <div class="container mx-auto p-4 space-y-2">
+        <a href="#why" class="block">Why</a>
+        <a href="#solutions" class="block">Solutions</a>
+        <a href="#tech" class="block">Technologies</a>
+        <a href="#calculator" class="block">Calculator</a>
+        <a href="#tips" class="block">Tips & Quiz</a>
+        <a href="#map" class="block">Map</a>
+        <a href="#pledge" class="block">Pledge</a>
+        <a href="#future" class="block">Future</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="pt-0">
+    
+    <!-- CARBON FOOTPRINT ASSESSMENT -->
+    <section id="assessment" class="min-h-screen flex items-center justify-center">
+      <div class="container mx-auto max-w-4xl p-6">
+        <div class="bg-white rounded-2xl shadow-lg p-8 md:p-10">
+          <div class="mb-6">
+            <div class="flex justify-between items-center mb-2">
+              <span class="text-sm text-slate-600">Step <span id="currentStep">1</span> of 6</span>
+              <span class="text-sm text-slate-600" id="progressPercent">17%</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" id="progressFill" style="width: 17%"></div>
+            </div>
+          </div>
+          
+          <h1 class="text-3xl md:text-4xl font-bold text-green-800 text-center mb-2">Carbon Footprint Assessment</h1>
+          <p class="text-center text-slate-600 mb-8">Let's understand your environmental impact and find ways to reduce it</p>
+          
+          <!-- Step 1: Personal Information -->
+          <div id="step1" class="assessment-step fade-in">
+            <h2 class="text-xl font-semibold text-green-700 mb-6">Step 1: Tell us about yourself</h2>
+            
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <label class="block text-sm font-medium mb-2">Your Name</label>
+                <input id="userName" type="text" class="w-full p-3 border rounded-lg" placeholder="Enter your name">
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium mb-2">Location in India</label>
+                <select id="userLocation" class="w-full p-3 border rounded-lg">
+                  <option value="">Select your state</option>
+                  <option value="Delhi">Delhi</option>
+                  <option value="Maharashtra">Maharashtra</option>
+                  <option value="Karnataka">Karnataka</option>
+                  <option value="Tamil Nadu">Tamil Nadu</option>
+                  <option value="Uttar Pradesh">Uttar Pradesh</option>
+                  <option value="West Bengal">West Bengal</option>
+                  <option value="Gujarat">Gujarat</option>
+                  <option value="Rajasthan">Rajasthan</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="mt-8 flex justify-end">
+              <button id="nextToStep2" class="px-5 py-3 bg-green-700 text-white rounded-lg shadow hover:bg-green-800 transition">Next</button>
+            </div>
+          </div>
+          
+          <!-- Step 2: Household Information -->
+          <div id="step2" class="assessment-step hidden">
+            <h2 class="text-xl font-semibold text-green-700 mb-6">Step 2: Your Household</h2>
+            
+            <div class="space-y-6">
+              <div>
+                <label class="block text-sm font-medium mb-2">House Type</label>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  <div class="option-card p-4 border rounded-lg text-center" data-value="1bhk">
+                    <div class="font-medium">1 BHK</div>
+                    <div class="text-xs text-slate-500 mt-1">Small apartment</div>
+                  </div>
+                  <div class="option-card p-4 border rounded-lg text-center" data-value="2bhk">
+                    <div class="font-medium">2 BHK</div>
+                    <div class="text-xs text-slate-500 mt-1">Medium apartment</div>
+                  </div>
+                  <div class="option-card p-4 border rounded-lg text-center" data-value="3bhk">
+                    <div class="font-medium">3 BHK</div>
+                    <div class="text-xs text-slate-500 mt-1">Large apartment</div>
+                  </div>
+                  <div class="option-card p-4 border rounded-lg text-center" data-value="house">
+                    <div class="font-medium">Independent House</div>
+                    <div class="text-xs text-slate-500 mt-1">Villa/bungalow</div>
+                  </div>
+                </div>
+                <input type="hidden" id="houseType">
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium mb-2">Number of People in Household</label>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  <div class="option-card p-4 border rounded-lg text-center" data-value="1">
+                    <div class="font-medium">1 Person</div>
+                  </div>
+                  <div class="option-card p-4 border rounded-lg text-center" data-value="2">
+                    <div class="font-medium">2 People</div>
+                  </div>
+                  <div class="option-card p-4 border rounded-lg text-center" data-value="3">
+                    <div class="font-medium">3 People</div>
+                  </div>
+                  <div class="option-card p-4 border rounded-lg text-center" data-value="4">
+                    <div class="font-medium">4+ People</div>
+                  </div>
+                </div>
+                <input type="hidden" id="householdSize">
+              </div>
+            </div>
+            
+            <div class="mt-8 flex justify-between">
+              <button id="backToStep1" class="px-5 py-3 border rounded-lg hover:bg-slate-50 transition">Back</button>
+              <button id="nextToStep3" class="px-5 py-3 bg-green-700 text-white rounded-lg shadow hover:bg-green-800 transition">Next</button>
+            </div>
+          </div>
+          
+          <!-- Step 3: Transportation Habits -->
+          <div id="step3" class="assessment-step hidden">
+            <h2 class="text-xl font-semibold text-green-700 mb-6">Step 3: Your Transportation Habits</h2>
+            
+            <div class="space-y-6">
+              <div>
+                <label class="block text-sm font-medium mb-2">Primary Mode of Daily Travel</label>
+                <select id="travelMode" class="w-full p-3 border rounded-lg">
+                  <option value="none">No Travel (Work from Home)</option>
+                  <option value="carpool">Carpooling</option>
+                  <option value="car_petrol">Personal Car (Petrol)</option>
+                  <option value="car_diesel">Personal Car (Diesel)</option>
+                  <option value="motorcycle">Motorcycle/Scooter</option>
+                  <option value="public">Public Transport</option>
+                  <option value="walking">Walking/Cycling</option>
+                  <option value="mixed">Mixed (Car + Public)</option>
+                </select>
+              </div>
+              
+              <div id="travelDistanceContainer">
+                <label class="block text-sm font-medium mb-2">Daily Travel Distance (km)</label>
+                <input id="travelDistance" type="number" min="0" class="w-full p-3 border rounded-lg" placeholder="e.g., 15">
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium mb-2">Frequency of Domestic Flights</label>
+                <select id="flightFrequency" class="w-full p-3 border rounded-lg">
+                  <option value="0">Never</option>
+                  <option value="2">1-2 times per year</option>
+                  <option value="5">3-5 times per year</option>
+                  <option value="8">6-8 times per year</option>
+                  <option value="12">More than 8 times per year</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="mt-8 flex justify-between">
+              <button id="backToStep2" class="px-5 py-3 border rounded-lg hover:bg-slate-50 transition">Back</button>
+              <button id="nextToStep4" class="px-5 py-3 bg-green-700 text-white rounded-lg shadow hover:bg-green-800 transition">Next</button>
+            </div>
+          </div>
+          
+          <!-- Step 4: Home Appliances -->
+          <div id="step4" class="assessment-step hidden">
+            <h2 class="text-xl font-semibold text-green-700 mb-6">Step 4: Your Home Appliances</h2>
+            
+            <div class="space-y-6">
+              <div>
+                <label class="block text-sm font-medium mb-2">Air Conditioner Usage</label>
+                <select id="acUsage" class="w-full p-3 border rounded-lg">
+                  <option value="none">No AC</option>
+                  <option value="low">1-2 hours daily (only in summer)</option>
+                  <option value="medium">4-6 hours daily (summer months)</option>
+                  <option value="high">8+ hours daily (regular use)</option>
+                </select>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium mb-2">Refrigerator Type</label>
+                <select id="fridgeType" class="w-full p-3 border rounded-lg">
+                  <option value="small">Small (Single door, 5-star rated)</option>
+                  <option value="medium">Medium (Double door, 3-star rated)</option>
+                  <option value="large">Large (Double door, old model)</option>
+                </select>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium mb-3">Other High-Usage Appliances</label>
+                <div class="space-y-2" id="applianceOptions">
+                  <div class="appliance-option" data-appliance="washing">
+                    <div>
+                      <div class="font-medium">Washing Machine</div>
+                      <div class="text-xs text-slate-500">Used 3+ times/week</div>
+                    </div>
+                    <select class="appliance-usage border rounded p-1 text-sm" data-appliance="washing">
+                      <option value="none">Not used</option>
+                      <option value="low">1-2 times/week</option>
+                      <option value="medium">3-4 times/week</option>
+                      <option value="high">5+ times/week</option>
+                    </select>
+                  </div>
+                  
+                  <div class="appliance-option" data-appliance="geyser">
+                    <div>
+                      <div class="font-medium">Water Geyser</div>
+                      <div class="text-xs text-slate-500">Used for bathing</div>
+                    </div>
+                    <select class="appliance-usage border rounded p-1 text-sm" data-appliance="geyser">
+                      <option value="none">Not used</option>
+                      <option value="low">1-2 times/day</option>
+                      <option value="medium">3-4 times/day</option>
+                      <option value="high">5+ times/day</option>
+                    </select>
+                  </div>
+                  
+                  <div class="appliance-option" data-appliance="oven">
+                    <div>
+                      <div class="font-medium">Microwave/Oven</div>
+                      <div class="text-xs text-slate-500">Used for cooking</div>
+                    </div>
+                    <select class="appliance-usage border rounded p-1 text-sm" data-appliance="oven">
+                      <option value="none">Not used</option>
+                      <option value="low">1-2 times/week</option>
+                      <option value="medium">3-4 times/week</option>
+                      <option value="high">Daily use</option>
+                    </select>
+                  </div>
+                  
+                  <div class="appliance-option" data-appliance="television">
+                    <div>
+                      <div class="font-medium">Television</div>
+                      <div class="text-xs text-slate-500">Entertainment</div>
+                    </div>
+                    <select class="appliance-usage border rounded p-1 text-sm" data-appliance="television">
+                      <option value="none">Not used</option>
+                      <option value="low">1-2 hours/day</option>
+                      <option value="medium">3-4 hours/day</option>
+                      <option value="high">5+ hours/day</option>
+                    </select>
+                  </div>
+                  
+                  <div class="appliance-option" data-appliance="computer">
+                    <div>
+                      <div class="font-medium">Computer/Laptop</div>
+                      <div class="text-xs text-slate-500">Work/Entertainment</div>
+                    </div>
+                    <select class="appliance-usage border rounded p-1 text-sm" data-appliance="computer">
+                      <option value="none">Not used</option>
+                      <option value="low">1-3 hours/day</option>
+                      <option value="medium">4-6 hours/day</option>
+                      <option value="high">7+ hours/day</option>
+                    </select>
+                  </div>
+                  
+                  <div class="appliance-option" data-appliance="water_purifier">
+                    <div>
+                      <div class="font-medium">Water Purifier</div>
+                      <div class="text-xs text-slate-500">Drinking water</div>
+                    </div>
+                    <select class="appliance-usage border rounded p-1 text-sm" data-appliance="water_purifier">
+                      <option value="none">Not used</option>
+                      <option value="low">RO system</option>
+                      <option value="medium">UV system</option>
+                      <option value="high">Both RO+UV</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="mt-8 flex justify-between">
+              <button id="backToStep3" class="px-5 py-3 border rounded-lg hover:bg-slate-50 transition">Back</button>
+              <button id="nextToStep5" class="px-5 py-3 bg-green-700 text-white rounded-lg shadow hover:bg-green-800 transition">Next</button>
+            </div>
+          </div>
+          
+          <!-- Step 5: Heavy Appliances -->
+          <div id="step5" class="assessment-step hidden">
+            <h2 class="text-xl font-semibold text-green-700 mb-6">Step 5: Heavy Appliances & Equipment</h2>
+            
+            <div class="space-y-6">
+              <div>
+                <label class="block text-sm font-medium mb-3">Heavy Power Consumption Appliances</label>
+                <div class="space-y-2" id="heavyApplianceOptions">
+                  <div class="appliance-option" data-appliance="water_heater">
+                    <div>
+                      <div class="font-medium">Instant Water Heater</div>
+                      <div class="text-xs text-slate-500">High wattage heating</div>
+                    </div>
+                    <select class="appliance-usage border rounded p-1 text-sm" data-appliance="water_heater">
+                      <option value="none">Not used</option>
+                      <option value="low">Occasionally</option>
+                      <option value="medium">Regular use</option>
+                      <option value="high">Heavy use</option>
+                    </select>
+                  </div>
+                  
+                  <div class="appliance-option" data-appliance="air_purifier">
+                    <div>
+                      <div class="font-medium">Air Purifier</div>
+                      <div class="text-xs text-slate-500">Air quality management</div>
+                    </div>
+                    <select class="appliance-usage border rounded p-1 text-sm" data-appliance="air_purifier">
+                      <option value="none">Not used</option>
+                      <option value="low">Seasonal use</option>
+                      <option value="medium">Regular use</option>
+                      <option value="high">24/7 operation</option>
+                    </select>
+                  </div>
+                  
+                  <div class="appliance-option" data-appliance="water_pump">
+                    <div>
+                      <div class="font-medium">Water Pump</div>
+                      <div class="text-xs text-slate-500">For water supply</div>
+                    </div>
+                    <select class="appliance-usage border rounded p-1 text-sm" data-appliance="water_pump">
+                      <option value="none">Not used</option>
+                      <option value="low">Occasional use</option>
+                      <option value="medium">Daily use</option>
+                      <option value="high">Frequent use</option>
+                    </select>
+                  </div>
+                  
+                  <div class="appliance-option" data-appliance="electric_vehicle">
+                    <div>
+                      <div class="font-medium">Electric Vehicle Charging</div>
+                      <div class="text-xs text-slate-500">Home charging station</div>
+                    </div>
+                    <select class="appliance-usage border rounded p-1 text-sm" data-appliance="electric_vehicle">
+                      <option value="none">Not applicable</option>
+                      <option value="low">Occasional charging</option>
+                      <option value="medium">Regular charging</option>
+                      <option value="high">Daily charging</option>
+                    </select>
+                  </div>
+                  
+                  <div class="appliance-option" data-appliance="inverter">
+                    <div>
+                      <div class="font-medium">Inverter/UPS</div>
+                      <div class="text-xs text-slate-500">Backup power system</div>
+                    </div>
+                    <select class="appliance-usage border rounded p-1 text-sm" data-appliance="inverter">
+                      <option value="none">Not used</option>
+                      <option value="low">Rarely used</option>
+                      <option value="medium">Occasionally used</option>
+                      <option value="high">Frequently used</option>
+                    </select>
+                  </div>
+                  
+                  <div class="appliance-option" data-appliance="electric_stove">
+                    <div>
+                      <div class="font-medium">Electric Stove/Cooktop</div>
+                      <div class="text-xs text-slate-500">Cooking appliance</div>
+                    </div>
+                    <select class="appliance-usage border rounded p-1 text-sm" data-appliance="electric_stove">
+                      <option value="none">Not used</option>
+                      <option value="low">Occasional use</option>
+                      <option value="medium">Regular use</option>
+                      <option value="high">Primary cooking</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="mt-8 flex justify-between">
+              <button id="backToStep4" class="px-5 py-3 border rounded-lg hover:bg-slate-50 transition">Back</button>
+              <button id="nextToStep6" class="px-5 py-3 bg-green-700 text-white rounded-lg shadow hover:bg-green-800 transition">Next</button>
+            </div>
+          </div>
+          
+          <!-- Step 6: Lifestyle & Consumption -->
+          <div id="step6" class="assessment-step hidden">
+            <h2 class="text-xl font-semibold text-green-700 mb-6">Step 6: Your Lifestyle & Consumption</h2>
+            
+            <div class="space-y-6">
+              <div>
+                <label class="block text-sm font-medium mb-2">Diet Type</label>
+                <select id="dietType" class="w-full p-3 border rounded-lg">
+                  <option value="vegetarian">Vegetarian</option>
+                  <option value="nonveg_occasional">Non-Vegetarian (1-2 times/week)</option>
+                  <option value="nonveg_regular">Non-Vegetarian (3+ times/week)</option>
+                </select>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium mb-2">Clothing Shopping Frequency</label>
+                <select id="clothingFrequency" class="w-full p-3 border rounded-lg">
+                  <option value="low">Rarely (only when needed)</option>
+                  <option value="medium">Occasionally (seasonal shopping)</option>
+                  <option value="high">Frequently (monthly shopping)</option>
+                </select>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium mb-2">Use of Single-Use Plastics</label>
+                <select id="plasticUsage" class="w-full p-3 border rounded-lg">
+                  <option value="low">Avoid whenever possible</option>
+                  <option value="medium">Occasionally use</option>
+                  <option value="high">Regularly use (bags, bottles, packaging)</option>
+                </select>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium mb-2">Waste Management</label>
+                <select id="wasteManagement" class="w-full p-3 border rounded-lg">
+                  <option value="segregated">Segregate & Compost</option>
+                  <option value="partial">Partial Segregation</option>
+                  <option value="mixed">Mixed Waste (No segregation)</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="mt-8 flex justify-between">
+              <button id="backToStep5" class="px-5 py-3 border rounded-lg hover:bg-slate-50 transition">Back</button>
+              <button id="calculateFootprint" class="px-5 py-3 bg-green-700 text-white rounded-lg shadow hover:bg-green-800 transition">Calculate My Footprint</button>
+            </div>
+          </div>
+          
+          <!-- Results -->
+          <div id="results" class="assessment-step hidden">
+            <h2 class="text-2xl font-bold text-green-800 text-center mb-2">Your Carbon Footprint Results</h2>
+            <p class="text-center text-slate-600 mb-8" id="userGreeting"></p>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+              <!-- Pie Chart -->
+              <div class="bg-white p-4 rounded-lg border">
+                <h3 class="font-semibold text-green-700 mb-4">Breakdown of Your Carbon Footprint</h3>
+                <canvas id="footprintPieChart" height="250"></canvas>
+              </div>
+              
+              <!-- Bar Chart -->
+              <div class="bg-white p-4 rounded-lg border">
+                <h3 class="font-semibold text-green-700 mb-4">Your Footprint vs Average</h3>
+                <canvas id="comparisonBarChart" height="250"></canvas>
+              </div>
+            </div>
+            
+            <div class="mt-8 bg-green-50 p-6 rounded-lg">
+              <h3 class="font-semibold text-green-700 mb-3">Personalized Recommendations</h3>
+              <div id="recommendations" class="space-y-2 text-sm text-slate-700"></div>
+            </div>
+            
+            <div class="mt-8 text-center">
+              <button id="goToDashboard" class="px-5 py-3 bg-green-700 text-white rounded-lg shadow hover:bg-green-800 transition">Continue to EcoSphere Dashboard</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HERO -->
+    <section id="home" class="min-h-[60vh] flex items-center hidden">
+      <div class="container mx-auto grid md:grid-cols-2 gap-8 items-center p-6">
+        <div>
+          <h1 class="text-4xl md:text-5xl font-extrabold text-green-800 leading-tight">Live Smart, Live Green 🌿</h1>
+          <p class="mt-4 max-w-xl text-slate-700">Small daily choices can reduce your carbon footprint. Explore green technologies, measure your impact, and join a community of changemakers.</p>
+          <div class="mt-6 flex gap-3">
+            <a href="#calculator" class="px-5 py-3 bg-green-700 text-white rounded-lg shadow hover:bg-green-800 transition">Calculate My Footprint</a>
+            <a href="#solutions" class="px-5 py-3 border rounded-lg hover:bg-slate-50 transition">See Solutions</a>
+          </div>
+          <div class="mt-6 text-sm text-slate-600">
+            <strong>Quick demo:</strong> Try the calculator & quiz — judges love interactive features.
+          </div>
+        </div>
+
+        <div class="mx-auto">
+          <!-- simple hero mockup -->
+          <div class="bg-white p-6 rounded-2xl shadow-lg card max-w-md">
+            <h3 class="text-lg font-semibold text-green-700">Your weekly eco snapshot</h3>
+            <p class="mt-2 text-sm text-slate-600">Daily tips, footprint score, and suggested actions — right here.</p>
+            <div class="mt-4 grid grid-cols-3 gap-3">
+              <div class="p-3 bg-green-50 rounded text-center">
+                <div class="text-xs text-slate-500">Score</div>
+                <div class="font-bold text-green-700 text-xl" id="demoScore">—</div>
+              </div>
+              <div class="p-3 bg-green-50 rounded text-center">
+                <div class="text-xs text-slate-500">Tips</div>
+                <div class="font-bold text-green-700 text-xl">3</div>
+              </div>
+              <div class="p-3 bg-green-50 rounded text-center">
+                <div class="text-xs text-slate-500">Pledges</div>
+                <div class="font-bold text-green-700 text-xl" id="pledgeCount">0</div>
+              </div>
+            </div>
+            <div class="mt-4 text-xs text-slate-500">(This is a static demo — interactive features are below)</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHY -->
+    <section id="why" class="py-12 container mx-auto p-6 hidden">
+      <h2 class="text-2xl font-bold text-green-800">Why Sustainable Living?</h2>
+      <p class="mt-2 text-slate-700 max-w-2xl">Climate change, pollution and resource depletion affect everyone. Sustainable living reduces emissions, preserves natural resources, and improves quality of life.</p>
+
+      <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white p-5 rounded-lg card">
+          <h3 class="font-semibold">Climate Impact</h3>
+          <p class="mt-2 text-sm text-slate-600">Lower GHG emissions by changing transport and energy habits.</p>
+        </div>
+        <div class="bg-white p-5 rounded-lg card">
+          <h3 class="font-semibold">Resource Savings</h3>
+          <p class="mt-2 text-sm text-slate-600">Conserve water, energy and materials to protect ecosystems.</p>
+        </div>
+        <div class="bg-white p-5 rounded-lg card">
+          <h3 class="font-semibold">Health & Community</h3>
+          <p class="mt-2 text-sm text-slate-600">Cleaner environments mean healthier people and stronger communities.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOLUTIONS -->
+    <section id="solutions" class="py-12 bg-green-100 hidden">
+      <div class="container mx-auto p-6">
+        <h2 class="text-2xl font-bold text-green-800">Simple Everyday Solutions</h2>
+        <p class="mt-2 text-slate-700 max-w-2xl">Small, consistent actions are powerful. Here are practical habits anyone can adopt.</p>
+
+        <ul class="mt-6 grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+          <li class="bg-white p-4 rounded-lg card">
+            <h4 class="font-semibold">Use Public Transport / Cycle</h4>
+            <p class="text-sm text-slate-600 mt-1">Reduce car trips; cycle or carpool when possible.</p>
+          </li>
+          <li class="bg-white p-4 rounded-lg card">
+            <h4 class="font-semibold">Switch to LEDs</h4>
+            <p class="text-sm text-slate-600 mt-1">LED bulbs use much less energy and last longer.</p>
+          </li>
+          <li class="bg-white p-4 rounded-lg card">
+            <h4 class="font-semibold">Reduce Food Waste</h4>
+            <p class="text-sm text-slate-600 mt-1">Plan meals, compost leftovers and donate excess food.</p>
+          </li>
+          <li class="bg-white p-4 rounded-lg card">
+            <h4 class="font-semibold">Choose Seasonal & Local</h4>
+            <p class="text-sm text-slate-600 mt-1">Local produce reduces transport emissions.</p>
+          </li>
+          <li class="bg-white p-4 rounded-lg card">
+            <h4 class="font-semibold">Install Solar (if possible)</h4>
+            <p class="text-sm text-slate-600 mt-1">Solar reduces grid dependency and long-term bills.</p>
+          </li>
+          <li class="bg-white p-4 rounded-lg card">
+            <h4 class="font-semibold">Smart Plugs & Timers</h4>
+            <p class="text-sm text-slate-600 mt-1">Schedule appliances to avoid standby energy use.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- TECHNOLOGIES -->
+    <section id="tech" class="py-12 container mx-auto p-6 hidden">
+      <h2 class="text-2xl font-bold text-green-800">Green Technologies</h2>
+      <div class="mt-6 grid md:grid-cols-3 gap-6">
+        <div class="bg-white p-6 rounded-lg card">
+          <h3 class="font-semibold">Solar PV</h3>
+          <p class="text-sm text-slate-600 mt-2">Distributed rooftop solar and community solar farms.</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg card">
+          <h3 class="font-semibold">Electric Mobility</h3>
+          <p class="text-sm text-slate-600 mt-2">EVs, e-bikes and public electric buses reduce tailpipe emissions.</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg card">
+          <h3 class="font-semibold">Smart Recycling</h3>
+          <p class="text-sm text-slate-600 mt-2">AI-powered sorting and circular supply chains.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CALCULATOR -->
+    <section id="calculator" class="py-12 bg-green-50 hidden">
+      <div class="container mx-auto p-6">
+        <h2 class="text-2xl font-bold text-green-800">Carbon Footprint Calculator</h2>
+        <p class="mt-2 text-sm text-slate-700 max-w-2xl">Quick, approximate estimate of daily CO₂ emissions based on common activities.</p>
+
+        <div class="mt-6 grid md:grid-cols-2 gap-6">
+          <div class="bg-white p-6 rounded-lg">
+            <label class="block text-sm font-medium">Daily car travel (km)</label>
+            <input id="inputKm" type="number" min="0" step="0.1" placeholder="e.g., 10" class="mt-2 w-full p-3 border rounded" />
+
+            <label class="block text-sm font-medium mt-4">Daily electricity use (kWh)</label>
+            <input id="inputKwh" type="number" min="0" step="0.1" placeholder="e.g., 5" class="mt-2 w-full p-3 border rounded" />
+
+            <label class="block text-sm font-medium mt-4">Daily LPG / Gas use (cooking) (kg or L)</label>
+            <input id="inputGas" type="number" min="0" step="0.1" placeholder="e.g., 0.5" class="mt-2 w-full p-3 border rounded" />
+
+            <div class="mt-4 flex gap-2">
+              <button id="calcBtn" class="px-4 py-2 bg-green-700 text-white rounded hover:bg-green-800 transition">Calculate</button>
+              <button id="resetCalc" class="px-4 py-2 border rounded hover:bg-slate-50 transition">Reset</button>
+            </div>
+
+            <div class="mt-6">
+              <p class="text-sm text-slate-600">Approx. emission factors used (editable in code):</p>
+              <ul class="text-xs text-slate-500 mt-1">
+                <li>Car: <strong>0.120 kg CO₂ / km</strong> (average petrol car)</li>
+                <li>Electricity: <strong>0.82 kg CO₂ / kWh</strong> (grid average — approximate)</li>
+                <li>LPG/Gas: <strong>2.3 kg CO₂ / kg</strong> (approximate)</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="bg-white p-6 rounded-lg">
+            <h3 class="font-semibold">Your Result</h3>
+            <div id="calcResult" class="mt-4 text-slate-700">
+              <p class="text-sm">Enter values and press <em>Calculate</em>.</p>
+            </div>
+
+            <div class="mt-6">
+              <h4 class="font-medium">Suggestions</h4>
+              <ul id="suggestions" class="mt-2 text-sm text-slate-600 space-y-1"></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIPS + QUIZ -->
+    <section id="tips" class="py-12 container mx-auto p-6 hidden">
+      <div class="grid md:grid-cols-2 gap-6">
+        <!-- Tips -->
+        <div class="bg-white p-6 rounded-lg card">
+          <h3 class="text-lg font-semibold text-green-700">Daily Eco Tip</h3>
+          <p class="mt-2 text-sm text-slate-600">Small actionable tips to reduce waste & energy use.</p>
+          <div class="mt-4">
+            <button id="newTip" class="px-4 py-2 bg-green-700 text-white rounded hover:bg-green-800 transition">Give me a tip</button>
+            <div id="tipBox" class="mt-4 p-4 bg-green-50 rounded text-slate-700">Press the button for a tip.</div>
+          </div>
+        </div>
+
+        <!-- Quiz -->
+        <div class="bg-white p-6 rounded-lg card">
+          <h3 class="text-lg font-semibold text-green-700">How eco-friendly are you? (Mini Quiz)</h3>
+          <div id="quizArea" class="mt-4">
+            <div id="quizIntro">
+              <p class="text-sm text-slate-600">3 quick questions. Get a score and tips.</p>
+              <button id="startQuiz" class="mt-3 px-4 py-2 bg-green-700 text-white rounded hover:bg-green-800 transition">Start Quiz</button>
+            </div>
+
+            <div id="quizQuestion" class="hidden">
+              <div id="qText" class="font-medium"></div>
+              <div id="qOptions" class="mt-3 space-y-2"></div>
+              <div class="mt-3 flex gap-2">
+                <button id="nextQ" class="px-4 py-2 bg-green-700 text-white rounded hover:bg-green-800 transition">Next</button>
+                <button id="quitQ" class="px-4 py-2 border rounded hover:bg-slate-50 transition">Quit</button>
+              </div>
+            </div>
+
+            <div id="quizResult" class="hidden mt-4"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MAP / DIRECTORY -->
+    <section id="map" class="py-12 bg-green-100 hidden">
+      <div class="container mx-auto p-6">
+        <h2 class="text-2xl font-bold text-green-800">Find Nearby Recycling & EV Stations</h2>
+        <p class="mt-2 text-sm text-slate-700">This embedded map opens Google Maps search for recycling centers. (Works without API key.)</p>
+
+        <div class="mt-4 grid md:grid-cols-2 gap-6">
+          <div class="bg-white p-4 rounded-lg card">
+            <iframe
+              src="https://www.google.com/maps?q=recycling%20center%20near%20me&output=embed"
+              style="width:100%;height:300px;border:0;border-radius:8px;"
+              loading="lazy"></iframe>
+            <p class="mt-2 text-xs text-slate-600">Tip: allow the browser to use your location to get nearby results.</p>
+          </div>
+
+          <div class="bg-white p-4 rounded-lg card">
+            <h4 class="font-semibold">Other directories</h4>
+            <ul class="mt-3 text-sm text-slate-600 space-y-2">
+              <li>Local municipal websites often list waste management & e-waste collection points.</li>
+              <li>Use apps like Google Maps or local government portals for EV charger locations.</li>
+              <li>If you want, we can integrate the Google Maps API (requires key) — ask me to add it.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PLEDGE / COMMUNITY -->
+    <section id="pledge" class="py-12 container mx-auto p-6 hidden">
+      <h2 class="text-2xl font-bold text-green-800">Join the Pledge</h2>
+      <p class="mt-2 text-sm text-slate-700">Take a short pledge and add your name to the community list.</p>
+
+      <div class="mt-6 grid md:grid-cols-2 gap-6">
+        <div class="bg-white p-6 rounded-lg card">
+          <label class="block text-sm font-medium">Your name</label>
+          <input id="pledgeName" class="mt-2 p-3 border rounded w-full" placeholder="e.g., Aryan Tiwari" />
+          <label class="block text-sm font-medium mt-4">Email (optional)</label>
+          <input id="pledgeEmail" class="mt-2 p-3 border rounded w-full" placeholder="your@email.com" />
+          <div class="mt-4 flex gap-2">
+            <button id="pledgeBtn" class="px-4 py-2 bg-green-700 text-white rounded hover:bg-green-800 transition">Take Pledge</button>
+            <button id="clearPledges" class="px-4 py-2 border rounded hover:bg-slate-50 transition">Clear All</button>
+          </div>
+          <p class="mt-3 text-xs text-slate-500">Pledges are stored locally in your browser (localStorage) for demo/demo-only.</p>
+        </div>
+
+        <div class="bg-white p-6 rounded-lg card">
+          <h3 class="font-semibold">Community Pledges (<span id="pledgeTotal">0</span>)</h3>
+          <ul id="pledgeList" class="mt-3 text-sm text-slate-700 max-h-64 overflow-auto space-y-2"></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- FUTURE VISION -->
+    <section id="future" class="py-12 bg-green-50 hidden">
+      <div class="container mx-auto p-6">
+        <h2 class="text-2xl font-bold text-green-800">Future Roadmap</h2>
+        <p class="mt-2 text-slate-700">Ideas to scale the project beyond hackathon MVP:</p>
+        <ul class="mt-4 list-disc ml-5 text-sm text-slate-600 space-y-2">
+          <li>AI-driven personalized suggestions using user history.</li>
+          <li>Sensor & IoT integrations for real energy monitoring.</li>
+          <li>Gamification & rewards with partner NGOs or municipalities.</li>
+          <li>Mobile app with offline-first support and push reminders.</li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-white border-t mt-8 hidden">
+    <div class="container mx-auto p-6 text-center text-sm text-slate-600">
+      © <span id="year"></span> EcoSphere — Built for a sustainable future • Team: Your names here
+    </div>
+  </footer>
+
+  <!-- SCRIPT -->
+  <script>
+    // small helpers
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // mobile menu toggle
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    menuBtn?.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    // -----------------------------
+    // Carbon Footprint Assessment
+    // -----------------------------
+    
+    // Option card selection
+    document.querySelectorAll('.option-card').forEach(card => {
+      card.addEventListener('click', function() {
+        // Remove selection from siblings
+        this.parentElement.querySelectorAll('.option-card').forEach(sibling => {
+          sibling.classList.remove('selected');
+        });
+        
+        // Select current card
+        this.classList.add('selected');
+        
+        // Update hidden input
+        const inputId = this.parentElement.nextElementSibling.id;
+        document.getElementById(inputId).value = this.dataset.value;
+      });
+    });
+
+    // Appliance option selection
+    document.querySelectorAll('.appliance-option').forEach(option => {
+      option.addEventListener('click', function(e) {
+        // Don't trigger if the click was on the select element
+        if (e.target.tagName === 'SELECT') return;
+        
+        this.classList.toggle('selected');
+      });
+    });
+
+    // Show/hide travel distance based on travel mode
+    document.getElementById('travelMode').addEventListener('change', function() {
+      const travelDistanceContainer = document.getElementById('travelDistanceContainer');
+      if (this.value === 'none') {
+        travelDistanceContainer.classList.add('hidden');
+      } else {
+        travelDistanceContainer.classList.remove('hidden');
+      }
+    });
+
+    // Step navigation
+    const steps = ['step1', 'step2', 'step3', 'step4', 'step5', 'step6', 'results'];
+    let currentStep = 0;
+    
+    function updateProgress() {
+      const percent = ((currentStep + 1) / (steps.length - 1)) * 100;
+      document.getElementById('progressFill').style.width = `${percent}%`;
+      document.getElementById('progressPercent').textContent = `${Math.round(percent)}%`;
+      document.getElementById('currentStep').textContent = currentStep + 1;
+    }
+    
+    function showStep(stepIndex) {
+      steps.forEach((step, index) => {
+        const element = document.getElementById(step);
+        if (index === stepIndex) {
+          element.classList.remove('hidden');
+          element.classList.add('fade-in');
+          setTimeout(() => element.classList.remove('fade-in'), 300);
+        } else {
+          element.classList.add('hidden');
+        }
+      });
+      currentStep = stepIndex;
+      updateProgress();
+    }
+    
+    // Navigation buttons
+    document.getElementById('nextToStep2').addEventListener('click', () => {
+      const name = document.getElementById('userName').value.trim();
+      const location = document.getElementById('userLocation').value;
+      
+      if (!name) {
+        alert('Please enter your name');
+        return;
+      }
+      
+      if (!location) {
+        alert('Please select your location');
+        return;
+      }
+      
+      showStep(1);
+    });
+    
+    document.getElementById('backToStep1').addEventListener('click', () => showStep(0));
+    document.getElementById('nextToStep3').addEventListener('click', () => {
+      const houseType = document.getElementById('houseType').value;
+      const householdSize = document.getElementById('householdSize').value;
+      
+      if (!houseType || !householdSize) {
+        alert('Please select your house type and household size');
+        return;
+      }
+      
+      showStep(2);
+    });
+    
+    document.getElementById('backToStep2').addEventListener('click', () => showStep(1));
+    document.getElementById('nextToStep4').addEventListener('click', () => {
+      const travelMode = document.getElementById('travelMode').value;
+      const distance = document.getElementById('travelDistance').value;
+      
+      if (travelMode !== 'none' && (!distance || distance <= 0)) {
+        alert('Please enter your daily travel distance');
+        return;
+      }
+      
+      showStep(3);
+    });
+    
+    document.getElementById('backToStep3').addEventListener('click', () => showStep(2));
+    document.getElementById('nextToStep5').addEventListener('click', () => showStep(4));
+    document.getElementById('backToStep4').addEventListener('click', () => showStep(3));
+    document.getElementById('nextToStep6').addEventListener('click', () => showStep(5));
+    document.getElementById('backToStep5').addEventListener('click', () => showStep(4));
+    
+    // Calculate footprint and show results
+    document.getElementById('calculateFootprint').addEventListener('click', () => {
+      calculateFootprint();
+      showStep(6);
+    });
+    
+    // Go to main dashboard
+    document.getElementById('goToDashboard').addEventListener('click', () => {
+      // Hide assessment and show main content
+      document.getElementById('assessment').classList.add('hidden');
+      
+      // Show all main sections
+      const sections = document.querySelectorAll('section[id]:not(#assessment)');
+      sections.forEach(section => {
+        section.classList.remove('hidden');
+      });
+      
+      // Show header and footer
+      document.getElementById('mainHeader').classList.remove('hidden');
+      document.querySelector('footer').classList.remove('hidden');
+      
+      // Update main content padding
+      document.querySelector('main').classList.add('pt-24');
+      
+      // Scroll to top
+      window.scrollTo(0, 0);
+    });
+    
+    function calculateFootprint() {
+      // Get user data
+      const name = document.getElementById('userName').value.trim();
+      const location = document.getElementById('userLocation').value;
+      const houseType = document.getElementById('houseType').value;
+      const householdSize = parseInt(document.getElementById('householdSize').value);
+      const travelMode = document.getElementById('travelMode').value;
+      const travelDistance = travelMode === 'none' ? 0 : parseFloat(document.getElementById('travelDistance').value);
+      const flightFrequency = parseInt(document.getElementById('flightFrequency').value);
+      const acUsage = document.getElementById('acUsage').value;
+      const fridgeType = document.getElementById('fridgeType').value;
+      const dietType = document.getElementById('dietType').value;
+      const clothingFrequency = document.getElementById('clothingFrequency').value;
+      const plasticUsage = document.getElementById('plasticUsage').value;
+      const wasteManagement = document.getElementById('wasteManagement').value;
+      
+      // Get appliance usage data
+      const applianceUsage = {};
+      document.querySelectorAll('.appliance-usage').forEach(select => {
+        const appliance = select.dataset.appliance;
+        const usage = select.value;
+        applianceUsage[appliance] = usage;
+      });
+      
+      // Set greeting
+      document.getElementById('userGreeting').textContent = `Hello ${name}, here's your carbon footprint analysis for ${location}`;
+      
+      // Calculate emissions (simplified model based on household and lifestyle)
+      
+      // 1. Housing emissions (based on house type and size)
+      let housingEmissions = 0;
+      switch(houseType) {
+        case '1bhk':
+          housingEmissions = 800 + (householdSize * 100);
+          break;
+        case '2bhk':
+          housingEmissions = 1200 + (householdSize * 120);
+          break;
+        case '3bhk':
+          housingEmissions = 1600 + (householdSize * 140);
+          break;
+        case 'house':
+          housingEmissions = 2000 + (householdSize * 160);
+          break;
+      }
+      
+      // 2. Appliance emissions
+      let applianceEmissions = 0;
+      
+      // AC usage
+      switch(acUsage) {
+        case 'none':
+          applianceEmissions += 0;
+          break;
+        case 'low':
+          applianceEmissions += 400;
+          break;
+        case 'medium':
+          applianceEmissions += 800;
+          break;
+        case 'high':
+          applianceEmissions += 1200;
+          break;
+      }
+      
+      // Refrigerator
+      switch(fridgeType) {
+        case 'small':
+          applianceEmissions += 200;
+          break;
+        case 'medium':
+          applianceEmissions += 350;
+          break;
+        case 'large':
+          applianceEmissions += 500;
+          break;
+      }
+      
+      // Other appliances
+      Object.keys(applianceUsage).forEach(appliance => {
+        const usage = applianceUsage[appliance];
+        if (usage !== 'none') {
+          switch(appliance) {
+            case 'washing':
+              if (usage === 'low') applianceEmissions += 150;
+              else if (usage === 'medium') applianceEmissions += 300;
+              else if (usage === 'high') applianceEmissions += 450;
+              break;
+            case 'geyser':
+              if (usage === 'low') applianceEmissions += 200;
+              else if (usage === 'medium') applianceEmissions += 400;
+              else if (usage === 'high') applianceEmissions += 600;
+              break;
+            case 'oven':
+              if (usage === 'low') applianceEmissions += 100;
+              else if (usage === 'medium') applianceEmissions += 200;
+              else if (usage === 'high') applianceEmissions += 300;
+              break;
+            case 'television':
+              if (usage === 'low') applianceEmissions += 100;
+              else if (usage === 'medium') applianceEmissions += 200;
+              else if (usage === 'high') applianceEmissions += 300;
+              break;
+            case 'computer':
+              if (usage === 'low') applianceEmissions += 150;
+              else if (usage === 'medium') applianceEmissions += 300;
+              else if (usage === 'high') applianceEmissions += 450;
+              break;
+            case 'water_purifier':
+              if (usage === 'low') applianceEmissions += 50;
+              else if (usage === 'medium') applianceEmissions += 100;
+              else if (usage === 'high') applianceEmissions += 150;
+              break;
+            case 'water_heater':
+              if (usage === 'low') applianceEmissions += 200;
+              else if (usage === 'medium') applianceEmissions += 400;
+              else if (usage === 'high') applianceEmissions += 600;
+              break;
+            case 'air_purifier':
+              if (usage === 'low') applianceEmissions += 100;
+              else if (usage === 'medium') applianceEmissions += 200;
+              else if (usage === 'high') applianceEmissions += 300;
+              break;
+            case 'water_pump':
+              if (usage === 'low') applianceEmissions += 150;
+              else if (usage === 'medium') applianceEmissions += 300;
+              else if (usage === 'high') applianceEmissions += 450;
+              break;
+            case 'electric_vehicle':
+              if (usage === 'low') applianceEmissions += 300;
+              else if (usage === 'medium') applianceEmissions += 600;
+              else if (usage === 'high') applianceEmissions += 900;
+              break;
+            case 'inverter':
+              if (usage === 'low') applianceEmissions += 100;
+              else if (usage === 'medium') applianceEmissions += 200;
+              else if (usage === 'high') applianceEmissions += 300;
+              break;
+            case 'electric_stove':
+              if (usage === 'low') applianceEmissions += 200;
+              else if (usage === 'medium') applianceEmissions += 400;
+              else if (usage === 'high') applianceEmissions += 600;
+              break;
+          }
+        }
+      });
+      
+      // 3. Transportation emissions
+      let transportEmissions = 0;
+      switch(travelMode) {
+        case 'none':
+          transportEmissions = 0;
+          break;
+        case 'carpool':
+          transportEmissions = travelDistance * 0.06 * 365; // Shared emissions
+          break;
+        case 'car_petrol':
+          transportEmissions = travelDistance * 0.15 * 365;
+          break;
+        case 'car_diesel':
+          transportEmissions = travelDistance * 0.13 * 365;
+          break;
+        case 'motorcycle':
+          transportEmissions = travelDistance * 0.08 * 365;
+          break;
+        case 'public':
+          transportEmissions = travelDistance * 0.05 * 365;
+          break;
+        case 'walking':
+          transportEmissions = 0;
+          break;
+        case 'mixed':
+          transportEmissions = travelDistance * 0.09 * 365;
+          break;
+      }
+      
+      // Flights
+      const flightEmissions = flightFrequency * 200;
+      
+      // 4. Food emissions
+      let foodEmissions = 0;
+      switch(dietType) {
+        case 'vegetarian':
+          foodEmissions = 800 * householdSize;
+          break;
+        case 'nonveg_occasional':
+          foodEmissions = 1200 * householdSize;
+          break;
+        case 'nonveg_regular':
+          foodEmissions = 1600 * householdSize;
+          break;
+      }
+      
+      // 5. Consumption emissions (clothing, plastics, etc.)
+      let consumptionEmissions = 0;
+      
+      // Clothing
+      switch(clothingFrequency) {
+        case 'low':
+          consumptionEmissions += 200 * householdSize;
+          break;
+        case 'medium':
+          consumptionEmissions += 400 * householdSize;
+          break;
+        case 'high':
+          consumptionEmissions += 600 * householdSize;
+          break;
+      }
+      
+      // Plastics
+      switch(plasticUsage) {
+        case 'low':
+          consumptionEmissions += 100 * householdSize;
+          break;
+        case 'medium':
+          consumptionEmissions += 250 * householdSize;
+          break;
+        case 'high':
+          consumptionEmissions += 400 * householdSize;
+          break;
+      }
+      
+      // Waste
+      switch(wasteManagement) {
+        case 'segregated':
+          consumptionEmissions += 150 * householdSize;
+          break;
+        case 'partial':
+          consumptionEmissions += 300 * householdSize;
+          break;
+        case 'mixed':
+          consumptionEmissions += 500 * householdSize;
+          break;
+      }
+      
+      // Total emissions
+      const totalEmissions = housingEmissions + applianceEmissions + transportEmissions + 
+                            flightEmissions + foodEmissions + consumptionEmissions;
+      
+      // Calculate average for location
+      let averageEmissions = 0;
+      switch(location) {
+        case 'Delhi':
+          averageEmissions = 3500;
+          break;
+        case 'Maharashtra':
+          averageEmissions = 3200;
+          break;
+        case 'Karnataka':
+          averageEmissions = 3000;
+          break;
+        case 'Tamil Nadu':
+          averageEmissions = 2800;
+          break;
+        case 'Uttar Pradesh':
+          averageEmissions = 2500;
+          break;
+        case 'West Bengal':
+          averageEmissions = 2700;
+          break;
+        case 'Gujarat':
+          averageEmissions = 2900;
+          break;
+        case 'Rajasthan':
+          averageEmissions = 2600;
+          break;
+        default:
+          averageEmissions = 3000; // National average
+      }
+      
+      // Generate recommendations
+      const recommendations = document.getElementById('recommendations');
+      recommendations.innerHTML = '';
+      
+      if (acUsage === 'high') {
+        recommendations.innerHTML += '<p>• Reduce AC usage by using fans and natural ventilation when possible</p>';
+      }
+      
+      if (travelMode.includes('car') && travelMode !== 'carpool') {
+        recommendations.innerHTML += '<p>• Consider carpooling or using public transport for some trips</p>';
+      }
+      
+      if (plasticUsage === 'high' || plasticUsage === 'medium') {
+        recommendations.innerHTML += '<p>• Switch to reusable bags, bottles, and containers</p>';
+      }
+      
+      if (wasteManagement !== 'segregated') {
+        recommendations.innerHTML += '<p>• Start segregating waste and composting organic waste</p>';
+      }
+      
+      if (clothingFrequency === 'high') {
+        recommendations.innerHTML += '<p>• Consider buying second-hand or sustainable clothing</p>';
+      }
+      
+      if (applianceEmissions > 1500) {
+        recommendations.innerHTML += '<p>• Upgrade to energy-efficient appliances when possible</p>';
+      }
+      
+      // Check for high usage appliances
+      const highUsageAppliances = Object.keys(applianceUsage).filter(appliance => 
+        applianceUsage[appliance] === 'high'
+      );
+      
+      if (highUsageAppliances.length > 0) {
+        recommendations.innerHTML += '<p>• Consider reducing usage of high-consumption appliances</p>';
+      }
+      
+      // Create pie chart
+      const pieCtx = document.getElementById('footprintPieChart').getContext('2d');
+      new Chart(pieCtx, {
+        type: 'pie',
+        data: {
+          labels: ['Housing', 'Appliances', 'Transport', 'Flights', 'Food', 'Consumption'],
+          datasets: [{
+            data: [
+              housingEmissions,
+              applianceEmissions,
+              transportEmissions,
+              flightEmissions,
+              foodEmissions,
+              consumptionEmissions
+            ],
+            backgroundColor: [
+              '#4f46e5',
+              '#ef4444',
+              '#10b981',
+              '#f59e0b',
+              '#8b5cf6',
+              '#6b7280'
+            ]
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'bottom'
+            },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  const value = context.raw;
+                  const percentage = ((value / totalEmissions) * 100).toFixed(1);
+                  return `${context.label}: ${value.toFixed(0)} kg (${percentage}%)`;
+                }
+              }
+            }
+          }
+        }
+      });
+      
+      // Create bar chart
+      const barCtx = document.getElementById('comparisonBarChart').getContext('2d');
+      new Chart(barCtx, {
+        type: 'bar',
+        data: {
+          labels: ['Your Footprint', 'Average in Your Area'],
+          datasets: [{
+            label: 'kg CO₂ per year',
+            data: [totalEmissions, averageEmissions],
+            backgroundColor: [
+              '#10b981',
+              '#6b7280'
+            ]
+          }]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'kg CO₂ per year'
+              }
+            }
+          }
+        }
+      });
+    }
+
+    // -----------------------------
+    // Carbon Calculator
+    // -----------------------------
+    const calcBtn = document.getElementById('calcBtn');
+    const resetCalc = document.getElementById('resetCalc');
+    const calcResult = document.getElementById('calcResult');
+    const suggestions = document.getElementById('suggestions');
+
+    // emission factors (approximate)
+    const EF = {
+      car_per_km: 0.120,     // kg CO2 / km
+      kwh: 0.82,             // kg CO2 / kWh
+      gas_per_kg: 2.3        // kg CO2 / kg (LPG e.g.)
+    };
+
+    function formatKg(n){ return n.toFixed(2) + ' kg CO₂'; }
+
+    calcBtn.addEventListener('click', () => {
+      const km = parseFloat(document.getElementById('inputKm').value) || 0;
+      const kwh = parseFloat(document.getElementById('inputKwh').value) || 0;
+      const gas = parseFloat(document.getElementById('inputGas').value) || 0;
+
+      // digit-by-digit arithmetic performed via JS numbers (explicit operations)
+      const carEm = km * EF.car_per_km;
+      const elecEm = kwh * EF.kwh;
+      const gasEm = gas * EF.gas_per_kg;
+
+      const total = carEm + elecEm + gasEm;
+
+      calcResult.innerHTML = `
+        <p class="text-sm">Estimated daily emissions:</p>
+        <ul class="mt-2 text-sm text-slate-700">
+          <li>Car travel: <strong>${formatKg(carEm)}</strong></li>
+          <li>Electricity: <strong>${formatKg(elecEm)}</strong></li>
+          <li>Gas: <strong>${formatKg(gasEm)}</strong></li>
+        </ul>
+        <p class="mt-3 font-semibold">Total: <span class="text-green-700">${formatKg(total)}</span></p>
+      `;
+
+      // suggestions: simple heuristics
+      const sugg = [];
+      if (km > 5) sugg.push('Try carpooling, public transport or cycling for short trips.');
+      if (kwh > 4) sugg.push('Replace old bulbs with LEDs and unplug idle devices.');
+      if (gas > 1) sugg.push('Optimize cooking routines and reduce gas usage where possible.');
+      if (total > 5) sugg.push('Consider longer-term options like rooftop solar or efficient appliances.');
+
+      suggestions.innerHTML = '';
+      sugg.forEach(s => {
+        const li = document.createElement('li');
+        li.textContent = s;
+        suggestions.appendChild(li);
+      });
+
+      // update demo score in hero (simple normalized metric)
+      const demoScoreEl = document.getElementById('demoScore');
+      if (demoScoreEl) demoScoreEl.textContent = Math.max(0, (100 - Math.min(100, Math.round(total * 10)))) + '/100';
+    });
+
+    resetCalc?.addEventListener('click', () => {
+      document.getElementById('inputKm').value = '';
+      document.getElementById('inputKwh').value = '';
+      document.getElementById('inputGas').value = '';
+      calcResult.innerHTML = '<p class="text-sm">Enter values and press <em>Calculate</em>.</p>';
+      suggestions.innerHTML = '';
+    });
+
+    // -----------------------------
+    // Daily Tips
+    // -----------------------------
+    const tips = [
+      'Turn off the tap while brushing your teeth — save litres daily.',
+      'Air-dry clothes instead of using a dryer when possible.',
+      'Use a reusable water bottle and avoid single-use plastic.',
+      'Unplug chargers and devices when not in use to avoid standby power.',
+      'Buy seasonal, local produce to reduce food miles.',
+      'Compost kitchen waste to reduce landfill methane.',
+      'Replace old light bulbs with LED bulbs.',
+      'Take public transport or cycle for trips under 5 km.'
+    ];
+    const newTipBtn = document.getElementById('newTip');
+    const tipBox = document.getElementById('tipBox');
+
+    newTipBtn.addEventListener('click', () => {
+      const t = tips[Math.floor(Math.random() * tips.length)];
+      tipBox.textContent = t;
+    });
+
+    // -----------------------------
+    // Mini Quiz
+    // -----------------------------
+    const quiz = [
+      {
+        q: 'How often do you use a private car for short trips (<5 km)?',
+        options: ['Almost every time', 'Sometimes', 'Rarely / Never'],
+        scores: [0, 1, 2]
+      },
+      {
+        q: 'How often do you waste food (throw away leftovers)?',
+        options: ['Often', 'Sometimes', 'Rarely / I compost/share'],
+        scores: [0, 1, 2]
+      },
+      {
+        q: 'Do you regularly unplug devices or use power strips to avoid standby power?',
+        options: ['No', 'Sometimes', 'Yes'],
+        scores: [0, 1, 2]
+      }
+    ];
+
+    let qIndex = 0;
+    let qScore = 0;
+
+    const startQuizBtn = document.getElementById('startQuiz');
+    const quizArea = document.getElementById('quizArea');
+    const quizIntro = document.getElementById('quizIntro');
+    const quizQuestion = document.getElementById('quizQuestion');
+    const qText = document.getElementById('qText');
+    const qOptions = document.getElementById('qOptions');
+    const nextQ = document.getElementById('nextQ');
+    const quitQ = document.getElementById('quitQ');
+    const quizResult = document.getElementById('quizResult');
+
+    startQuizBtn?.addEventListener('click', () => {
+      qIndex = 0; qScore = 0;
+      quizIntro.classList.add('hidden');
+      quizResult.classList.add('hidden');
+      quizQuestion.classList.remove('hidden');
+      renderQuestion();
+    });
+
+    function renderQuestion() {
+      const current = quiz[qIndex];
+      qText.textContent = `${qIndex + 1}. ${current.q}`;
+      qOptions.innerHTML = '';
+      current.options.forEach((opt, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'block w-full text-left p-3 border rounded bg-white hover:bg-slate-50 transition';
+        btn.textContent = opt;
+        btn.addEventListener('click', () => {
+          qScore += current.scores[i];
+          // disable options
+          Array.from(qOptions.children).forEach(c => c.disabled = true);
+          // move to next question (or finish) after short delay
+          setTimeout(() => {
+            qIndex++;
+            if (qIndex < quiz.length) renderQuestion();
+            else finishQuiz();
+          }, 300);
+        });
+        qOptions.appendChild(btn);
+      });
+    }
+
+    nextQ.addEventListener('click', () => {
+      // allow skipping to next question with zero score for this question
+      qIndex++;
+      if (qIndex < quiz.length) renderQuestion();
+      else finishQuiz();
+    });
+
+    quitQ.addEventListener('click', () => {
+      quizIntro.classList.remove('hidden');
+      quizQuestion.classList.add('hidden');
+      quizResult.classList.add('hidden');
+    });
+
+    function finishQuiz() {
+      quizQuestion.classList.add('hidden');
+      quizResult.classList.remove('hidden');
+      let message = '';
+      if (qScore <= 2) message = 'You can improve — try adopting 1 new eco habit this week.';
+      else if (qScore <= 4) message = 'Good job! Keep adding more eco-friendly choices.';
+      else message = 'Excellent — you are already quite eco-friendly!';
+      quizResult.innerHTML = `<div class="p-4 bg-green-50 rounded"><p class="font-semibold">Score: ${qScore} / ${quiz.length * 2}</p><p class="mt-2 text-sm text-slate-700">${message}</p></div>`;
+    }
+
+    // -----------------------------
+    // Pledge: localStorage demo
+    // -----------------------------
+    const pledgeBtn = document.getElementById('pledgeBtn');
+    const pledgeName = document.getElementById('pledgeName');
+    const pledgeEmail = document.getElementById('pledgeEmail');
+    const pledgeList = document.getElementById('pledgeList');
+    const pledgeTotal = document.getElementById('pledgeTotal');
+    const clearPledgesBtn = document.getElementById('clearPledges');
+    const pledgeCountHero = document.getElementById('pledgeCount');
+
+    function loadPledges(){
+      const raw = localStorage.getItem('ecoPledges');
+      return raw ? JSON.parse(raw) : [];
+    }
+    function savePledges(arr){
+      localStorage.setItem('ecoPledges', JSON.stringify(arr));
+    }
+    function renderPledges(){
+      const arr = loadPledges();
+      pledgeList.innerHTML = '';
+      arr.slice().reverse().forEach(p => {
+        const li = document.createElement('li');
+        li.className = 'p-3 border rounded bg-white';
+        li.innerHTML = `<div class="text-sm font-semibold">${escapeHtml(p.name)}</div><div class="text-xs text-slate-500">${escapeHtml(p.email || '')}</div>`;
+        pledgeList.appendChild(li);
+      });
+      pledgeTotal.textContent = arr.length;
+      if (pledgeCountHero) pledgeCountHero.textContent = arr.length;
+    }
+
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, function(m){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[m]; });
+    }
+
+    pledgeBtn?.addEventListener('click', () => {
+      const name = pledgeName.value.trim();
+      const email = pledgeEmail.value.trim();
+      if (!name) { alert('Please enter your name'); return; }
+      const arr = loadPledges();
+      arr.push({ name, email, ts: Date.now() });
+      savePledges(arr);
+      pledgeName.value = ''; pledgeEmail.value = '';
+      renderPledges();
+    });
+
+    clearPledgesBtn?.addEventListener('click', () => {
+      if (!confirm('Clear all local pledges? This only clears data in your browser.')) return;
+      localStorage.removeItem('ecoPledges');
+      renderPledges();
+    });
+
+    // initial render
+    renderPledges();
+
+    // Accessibility & small polish: close mobile menu when anchor clicked
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', () => {
+        if (!mobileMenu.classList.contains('hidden')) mobileMenu.classList.add('hidden');
+      });
+    });
+  </script>
+</body>
+</html>
